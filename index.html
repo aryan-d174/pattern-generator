@@ -1,36 +1,95 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pattern Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        select, button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            width: 200px;
+        }
+        pre {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            width: 90%;
+            margin: 20px auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        #outputContainer {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
+
     <h1>Pattern Generator</h1>
+    <h2>Select a pattern:</h2>
+    
+    <!-- Pattern Selection Form -->
     <form id="patternForm">
-        <label for="pattern">Choose a pattern:</label>
-        <select id="pattern" name="pattern">
-            <option value="Rpp">Right Half Pyramid Pattern</option>
-            <option value="Lpp">Left Half Pyramid Pattern</option>
-            <option value="Irpp">Inverted Right Half Pyramid Pattern</option>
+        <select id="pattern">
+            <option value="Right Half Pyramid Pattern">Right Half Pyramid Pattern</option>
+            <option value="Left Half Pyramid Pattern">Left Half Pyramid Pattern</option>
+            <option value="Inverted Right Half Pyramid Pattern">Inverted Right Half Pyramid Pattern</option>
         </select>
-        <button type="submit">Generate</button>
+        <button type="submit">Generate Pattern</button>
     </form>
-    <h2>Output:</h2>
-    <pre id="output"></pre>
+
+    <!-- Output Section -->
+    <div id="outputContainer">
+        <h2>Generated Pattern:</h2>
+        <pre id="output"></pre>
+        <h2>Generated Code:</h2>
+        <pre id="code"></pre>
+    </div>
+
     <script>
+        // Listen for form submission
         document.getElementById("patternForm").addEventListener("submit", async function(event) {
             event.preventDefault();
+            
             const pattern = document.getElementById("pattern").value;
-            const response = await fetch("/.netlify/functions/pattern", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ pattern: pattern })
-            });
-            const data = await response.json();
-            document.getElementById("output").textContent = data.pattern;
+            try {
+                // Send request to the backend function
+                const response = await fetch("/.netlify/functions/pattern", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ pattern: pattern })
+                });
+                
+                // Parse the response
+                const data = await response.json();
+
+                // Display the pattern and code exactly as requested
+                document.getElementById("output").textContent = `Desired Pattern:\n${data.pattern}\n`;
+                document.getElementById("code").textContent = `Desired Code:\n${data.code}`;
+
+            } catch (error) {
+                console.error('Error fetching the pattern:', error);
+            }
         });
     </script>
+
 </body>
 </html>
