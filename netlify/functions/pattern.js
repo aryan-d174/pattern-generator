@@ -20,7 +20,7 @@ exports.handler = async (event, context) => {
       }
     `;
   } else if (pattern === 'Left Half Pyramid Pattern') {
-    patternOutput = '*\n* *\n* * *\n* * * *\n* * * * *\n';
+    patternOutput = "*\n**\n***\n****\n*****\n"; 
     codeOutput = `
       int rows = 5; 
 
@@ -29,7 +29,7 @@ exports.handler = async (event, context) => {
           cout << " "; 
         }
         for (int k = 1; k <= i; ++k) {
-          cout << "* ";
+          cout << "*"; 
         }
         cout << "\n"; 
       }
