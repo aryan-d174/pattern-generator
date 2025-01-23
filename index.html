@@ -5,85 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pattern Generator</title>
     <style>
-        body {
-            font-family: sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f0f0f0; /* Light Grey background */
-        }
-
-        .container {
-            background-color: #fff;
-            padding: 40px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            width: 500px; /* Set a maximum width for responsiveness */
-            max-width: 90%; /* Ensure it doesn't exceed 90% of viewport width */
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333; /* Darker text for better contrast */
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-            color: #555;
-        }
-
-        select {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            width: 100%;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            transition: background-color 0.3s ease; /* Add hover effect */
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        pre {
-            background-color: #282c34; /* Darker background for code */
-            color: #fff;
-            padding: 15px;
-            border-radius: 3px;
-            overflow-x: auto;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .output-section {
-            margin-top: 30px;
-        }
-
-        /* Optional: Add a subtle gradient to the background */
-        /* body {
-            background: linear-gradient(to bottom right, #f0f0f0, #e0e0e0); 
-        } */
+        /* Your CSS styles here */
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>Pattern Generator</h1>
+
+        <div class="input-group">
+            <input type="text" id="patternName" placeholder="Enter Pattern Name" />
+            <button type="button" onclick="searchPattern()">Search</button>
+        </div>
 
         <label for="pattern">Select a Pattern:</label>
         <select id="pattern">
@@ -105,28 +38,35 @@
 
     <script>
         async function generatePattern() {
-            const pattern = document.getElementById("pattern").value;
+            // Your existing generatePattern() function
+        }
+
+        async function searchPattern() {
+            const patternName = document.getElementById("patternName").value;
 
             try {
-                const response = await fetch("/.netlify/functions/pattern", {
+                const response = await fetch("/.netlify/functions/searchPattern", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ pattern: pattern })
+                    body: JSON.stringify({ name: patternName })
                 });
 
                 const data = await response.json();
 
-                if (data.pattern && data.code) {
-                    document.getElementById("output").textContent = `Desired Pattern:\n${data.pattern}`;
-                    document.getElementById("code").textContent = `Desired Code:\n${data.code}`;
+                if (data.pattern) {
+                    // Update the select element with the found pattern
+                    const select = document.getElementById("pattern");
+                    const option = document.createElement("option");
+                    option.value = data.pattern;
+                    option.text = data.pattern;
+                    select.appendChild(option);
+                    select.value = data.pattern; // Select the newly added option
                 } else {
-                    document.getElementById("output").textContent = "Invalid pattern selection!";
-                    document.getElementById("code").textContent = "";
+                    alert("Pattern not found!");
                 }
             } catch (error) {
-                console.error('Error fetching the pattern:', error);
-                document.getElementById("output").textContent = "Error fetching pattern. Please try again.";
-                document.getElementById("code").textContent = "";
+                console.error('Error searching for the pattern:', error);
+                alert("Error searching for pattern. Please try again.");
             }
         }
     </script>
