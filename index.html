@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern Generator</title>
+</head>
+<body>
+    <h1>Pattern Generator</h1>
+    <form id="patternForm">
+        <label for="pattern">Choose a pattern:</label>
+        <select id="pattern" name="pattern">
+            <option value="Rpp">Right Half Pyramid Pattern</option>
+            <option value="Lpp">Left Half Pyramid Pattern</option>
+            <option value="Irpp">Inverted Right Half Pyramid Pattern</option>
+        </select>
+        <button type="submit">Generate</button>
+    </form>
+    <h2>Output:</h2>
+    <pre id="output"></pre>
+    <script>
+        document.getElementById("patternForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            const pattern = document.getElementById("pattern").value;
+            const response = await fetch("/.netlify/functions/pattern", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ pattern: pattern })
+            });
+            const data = await response.json();
+            document.getElementById("output").textContent = data.pattern;
+        });
+    </script>
+</body>
+</html>
