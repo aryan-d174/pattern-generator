@@ -12,7 +12,7 @@ exports.handler = async (event, context) => {
         patternOutput = '*\n* *\n* * *\n* * * *\n* * * * *\n';
         codeOutput = `int x=5;\nfor(int i=0;i<=x;i++){\nfor(int j=0;j<=i;j++){ \ncout <<"* ";\n}\ncout << endl;\n}`;
     } else if (pattern === 'Left Half Pyramid Pattern') {
-        patternOutput = '    *\n   * *\n  * * *\n * * * *\n* * * * *\n';
+        patternOutput = '    *\n * *\n * * *\n * * * *\n * * * * *\n';
         codeOutput = `int x=5;\nfor(int i=0;i<=x;i++){\nfor(int j = 0; j<=2*(x-i)-1; j++){\ncout << " ";\n}\nfor(int k=0;k<=i;k++){\ncout <<"* ";\n}\ncout << endl;\n}`;
     } else if (pattern === 'Inverted Right Half Pyramid Pattern') {
         patternOutput = '* * * * *\n* * * *\n* * *\n* *\n*\n';
