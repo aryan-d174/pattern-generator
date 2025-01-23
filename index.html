@@ -6,96 +6,112 @@
     <title>Pattern Generator</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: sans-serif;
             margin: 20px;
             padding: 0;
-            background-color: #f4f4f4;
-        }
-        h1, h2 {
-            text-align: center;
-        }
-        form {
+            background-color: #f0f0f0;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            margin-top: 20px;
+            min-height: 100vh;
         }
-        select, button {
-            padding: 10px;
-            font-size: 16px;
-            margin: 10px;
-            width: 200px;
-        }
-        pre {
-            background-color: #333;
-            color: white;
-            padding: 15px;
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
             border-radius: 5px;
-            width: 90%;
-            margin: 20px auto;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-family: monospace; /* Ensures code is aligned properly */
-            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        #outputContainer {
+
+        h1 {
             text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        pre {
+            background-color: #222;
+            color: #fff;
+            padding: 15px;
+            border-radius: 3px;
+            overflow-x: auto; 
+        }
+
+        .output-section {
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
 
-    <h1>Pattern Generator</h1>
-    <h2>Select a pattern:</h2>
-    
-    <!-- Pattern Selection Form -->
-    <form id="patternForm">
+    <div class="container">
+        <h1>Pattern Generator</h1>
+
+        <label for="pattern">Select a Pattern:</label>
         <select id="pattern">
             <option value="Right Half Pyramid Pattern">Right Half Pyramid Pattern</option>
             <option value="Left Half Pyramid Pattern">Left Half Pyramid Pattern</option>
             <option value="Inverted Right Half Pyramid Pattern">Inverted Right Half Pyramid Pattern</option>
         </select>
-        <button type="submit">Generate Pattern</button>
-    </form>
 
-    <!-- Output Section -->
-    <div id="outputContainer">
-        <h2>Generated Pattern:</h2>
-        <pre id="output"></pre>
-        <h2>Generated Code:</h2>
-        <pre id="code"></pre>
+        <button type="button" onclick="generatePattern()">Generate</button>
+
+        <div class="output-section">
+            <h2>Generated Pattern:</h2>
+            <pre id="output"></pre>
+
+            <h2>Generated Code:</h2>
+            <pre id="code"></pre>
+        </div>
     </div>
 
     <script>
-        // Listen for form submission
-        document.getElementById("patternForm").addEventListener("submit", async function(event) {
-            event.preventDefault();
-            
+        async function generatePattern() {
             const pattern = document.getElementById("pattern").value;
+
             try {
-                // Send request to the backend function
                 const response = await fetch("/.netlify/functions/pattern", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ pattern: pattern })
                 });
-                
-                // Parse the response
+
                 const data = await response.json();
 
                 if (data.pattern && data.code) {
-                    // Properly format the pattern and code with proper indentation
-                    document.getElementById("output").textContent = `Desired Pattern:\n${data.pattern}\n`;
+                    document.getElementById("output").textContent = `Desired Pattern:\n${data.pattern}`;
                     document.getElementById("code").textContent = `Desired Code:\n${data.code}`;
                 } else {
                     document.getElementById("output").textContent = "Invalid pattern selection!";
                     document.getElementById("code").textContent = "";
                 }
-
             } catch (error) {
                 console.error('Error fetching the pattern:', error);
+                document.getElementById("output").textContent = "Error fetching pattern. Please try again.";
+                document.getElementById("code").textContent = "";
             }
-        });
+        }
     </script>
 
 </body>
