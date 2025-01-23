@@ -20,7 +20,7 @@ exports.handler = async (event, context) => {
       }
     `;
   }else if (pattern === 'Left Half Pyramid Pattern') {
-    patternOutput = "    *\n   **\n  ***\n ****\n*****\n"; 
+    patternOutput = "    *\n   * *\n  ***\n ****\n*****\n"; 
     codeOutput = `
       int rows = 5; 
 
