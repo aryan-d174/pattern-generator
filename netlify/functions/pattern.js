@@ -9,14 +9,14 @@ exports.handler = async (event, context) => {
 
     // Generate the pattern and code based on the selected pattern
     if (pattern === 'Right Half Pyramid Pattern') {
-        patternOutput = '* \n* * \n* * * \n* * * * \n* * * * * \n';
-        codeOutput = `const x = 5;\nfor (let i = 0; i <= x; i++) {\n  let line = '';\n  for (let j = 0; j <= i; j++) {\n    line += '* ';\n  }\n  console.log(line);\n}`;
+        patternOutput = '* \n* *\n* * *\n* * * *\n* * * * *\n';
+        codeOutput = `int x=5;\nfor(int i=0;i<=x;i++){\nfor(int j=0;j<=i;j++){ \ncout <<"* ";\n}\ncout << endl;\n}`;
     } else if (pattern === 'Left Half Pyramid Pattern') {
-        patternOutput = '    * \n   * * \n  * * * \n * * * * \n* * * * * \n';
-        codeOutput = `const x = 5;\nfor (let i = 0; i <= x; i++) {\n  let line = '';\n  for (let j = 0; j <= 2 * (x - i) - 1; j++) {\n    line += ' ';\n  }\n  for (let k = 0; k <= i; k++) {\n    line += '* ';\n  }\n  console.log(line);\n}`;
+        patternOutput = '    *\n   * *\n  * * *\n * * * *\n* * * * *\n';
+        codeOutput = `int x=5;\nfor(int i=0;i<=x;i++){\nfor(int j = 0; j<=2*(x-i)-1; j++){\ncout << " ";\n}\nfor(int k=0;k<=i;k++){\ncout <<"* ";\n}\ncout << endl;\n}`;
     } else if (pattern === 'Inverted Right Half Pyramid Pattern') {
-        patternOutput = '* * * * * \n* * * * \n* * * \n* * \n* \n';
-        codeOutput = `const x = 5;\nfor (let i = 0; i <= x; i++) {\n  let line = '';\n  for (let j = 0; j <= x - i; j++) {\n    line += '* ';\n  }\n  console.log(line);\n}`;
+        patternOutput = '* * * * *\n* * * *\n* * *\n* *\n*\n';
+        codeOutput = `int x=5;\nfor(int i=0;i<=x;i++){\nfor(int j=0;j<=x-i;j++){\ncout <<"* ";\n}\ncout << endl;\n} `;
     } else {
         return {
             statusCode: 400,
