@@ -16,7 +16,7 @@ exports.handler = async (event, context) => {
         for (int j = 1; j <= i; ++j) {
           cout << "* ";
         }
-        cout << "\n"; 
+        cout << " "; 
       }
     `;
   }else if (pattern === 'Left Half Pyramid Pattern') {
@@ -31,7 +31,7 @@ exports.handler = async (event, context) => {
         for (int k = 1; k <= i; ++k) {
           cout << "*"; 
         }
-        cout << "\n"; 
+        cout << " "; 
       }
     `;
   } else if (pattern === 'Inverted Right Half Pyramid Pattern') {
@@ -43,7 +43,7 @@ exports.handler = async (event, context) => {
         for (int j = 1; j <= i; ++j) {
           cout << "* ";
         }
-        cout << "\n"; 
+        cout << " "; 
       }
     `;
   } else {
