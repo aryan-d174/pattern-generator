@@ -9,7 +9,7 @@ exports.handler = async (event, context) => {
 
     // Generate the pattern and code based on the selected pattern
     if (pattern === 'Right Half Pyramid Pattern') {
-        patternOutput = '* \n* *\n* * *\n* * * *\n* * * * *\n';
+        patternOutput = '*\n* *\n* * *\n* * * *\n* * * * *\n';
         codeOutput = `int x=5;\nfor(int i=0;i<=x;i++){\nfor(int j=0;j<=i;j++){ \ncout <<"* ";\n}\ncout << endl;\n}`;
     } else if (pattern === 'Left Half Pyramid Pattern') {
         patternOutput = '    *\n   * *\n  * * *\n * * * *\n* * * * *\n';
