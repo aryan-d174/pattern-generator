@@ -81,9 +81,13 @@
                 // Parse the response
                 const data = await response.json();
 
-                // Display the pattern and code exactly as requested
-                document.getElementById("output").textContent = `Desired Pattern:\n${data.pattern}\n`;
-                document.getElementById("code").textContent = `Desired Code:\n${data.code}`;
+                if (data.pattern && data.code) {
+                    document.getElementById("output").textContent = `Desired Pattern:\n${data.pattern}\n`;
+                    document.getElementById("code").textContent = `Desired Code:\n${data.code}`;
+                } else {
+                    document.getElementById("output").textContent = "Invalid pattern selection!";
+                    document.getElementById("code").textContent = "";
+                }
 
             } catch (error) {
                 console.error('Error fetching the pattern:', error);
